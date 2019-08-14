@@ -19,7 +19,9 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-markdown": "^4.1.0"
+  },
   "peerDependencies": {
     "react": "16.x"
   },

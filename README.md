@@ -4,7 +4,79 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-Describe pcic-react-external-text here.
+This package enables text content of an application to be externalized as
+what is known in some circles (e.g., Java, .Net) as a resource file.
+Instead of being literally included in the source of the application,
+text resources (from a one-word label to a phrase to an entire page of help)
+are referred to indirectly by an identifier (e.g., 'app.name'), and
+rendered using the ExternalText component. What is rendered depends on the
+content of the resource file. This decouples maintenance of the text
+from maintenance of the app that uses it, and also simplifies reusing the
+same text in different places in an app.
+
+For convenience, the content of an item in the resource file can be
+(and by default is) interpreted as Markdown and rendered into HTML.
+This is the most common usage.
+
+For other uses an item in the resource file can also be interpreted and rendered 
+as a simple string.
+
+Because texts in actual applications frequently need to include variable data from
+the app, external texts are treated as JavaScript template literals, and
+are evaluated in the context of an optional user-provided dictionary of
+data values. For example, an external text may be the string
+`'You have ${num} messages.'`. The app can provide a dictionary containing 
+a value for `num` which is interpolated into the rendered text.
+
+To further support modularization of texts, elements of the external text
+source itself can be referred to within an external text string, courtesy
+of the automatically provided context variable `$$`. For example, the text
+`'This application is called ${$$.app.name}'` includes content of the the
+item at path `'app.name'` in its rendering (e.g., the rendered text might
+be `'This application is called Climate Explorer'`). Such self-reference
+can be nested indefinitely deep.
+
+This module is not too far from an internationalization (i18n) package,
+but is considerably simpler and lighter-weight. It also provides
+Markdown interpretation (which admittedly could be wrapped around an i18n
+package).
+
+## Usage
+
+1. Prepare an external texts file. (This is usually done in parallel with
+application development.) This file can be in any format, but ultimately
+must be converted to JS object for consumption by `ExternalText`.
+
+1. Set up loading of the external texts file. A typical pattern is to code
+this file in YAML, place it in a static resources folder, and use a loader
+that requests the file over HTTP and converts the file contents from YAML
+to a JS object. `ExternalText` provides a convenience method
+`ExternalText.makeYamlLoader` that does just this.
+
+1. Wrap the app (or other high-level component) in `ExternalText.Provider`.
+This provides the external text source to all `ExternalText` components
+through React's context API.
+
+  ```
+   import ExternalText from 'path/to/external-text';
+   ...
+   const loadTexts =
+     ExternalText.makeYamlLoader('http://example.org/app/static/texts.yaml');
+   ...
+   <ExternalText.Provider loadTexts={loadTexts}>
+     <App />
+   </ExternalText.Provider>
+  ```
+3. In `App` or any component rendered by it, use `ExternalText`.
+
+  ```
+   import T from 'path/to/external-text';    Note abbreviation
+   ...
+   <div>
+     <T path='path.to.item'/>
+     <T path='path.to.another.item'/>
+   </div>
+  ```
 
 ## Development toolchain and configuration
 
