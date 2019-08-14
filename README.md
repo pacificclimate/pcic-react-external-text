@@ -77,7 +77,7 @@ We'll also need to install and configure a Babel preset to process JSX (`@babel/
     * [Using Babel](https://jestjs.io/docs/en/getting-started.html#using-babel)
     * [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react/)
 
-1. Finally, to use Enzyme, we must install and configure it.
+1. To use Enzyme, we must install and configure it.
 
     ```
     npm install --save-dev enzyme enzyme-adapter-react-16
@@ -104,6 +104,19 @@ We'll also need to install and configure a Babel preset to process JSX (`@babel/
     References:
     * [Enzyme](https://airbnb.io/enzyme/)
     * [Using enzyme with Jest](https://airbnb.io/enzyme/docs/guides/jest.html#using-enzyme-with-jest)
+    
+1. We also wish to use some advanced JavaScript syntax in the tests, for which we install and configure 
+the following Babel plugins.
+
+    ```
+    npm install --save-dev @babel/plugin-proposal-class-properties
+    ```
+   
+    In `babel.config.js`:
+   
+    ```js
+    plugins: ["@babel/plugin-proposal-class-properties"]
+    ```
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
