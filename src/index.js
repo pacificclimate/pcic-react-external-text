@@ -178,7 +178,7 @@ export default class ExternalText extends React.Component {
     // Path (JS standard notation) selecting text item from source texts.
     data: PropTypes.object,
     // Data context in which to evaluate item's text.
-    as: PropTypes.oneOf(['raw', 'string', 'markup']).isRequired,
+    as: PropTypes.oneOf(['raw', 'string', 'markup']),
     // What kind of content to render
   };
 
@@ -189,7 +189,7 @@ export default class ExternalText extends React.Component {
   render() {
     const texts = this.context;
     const { path, data, as } = this.props;
-    return ExternalText.get(texts, path, data, as);
+    return get(texts, path, data, as);
   }
 }
 
