@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import ExternalText from './index';
+import ExternalText from '../src';
 import {
   escape, unescape, evaluateAsTemplateLiteral
-} from './index';
+} from '../src';
 
 
 describe('escaping', () => {
