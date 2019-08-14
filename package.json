@@ -24,7 +24,8 @@
     "react-markdown": "^4.1.0"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "16.x",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
