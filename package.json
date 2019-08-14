@@ -20,6 +20,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "deepdash": "^4.2.12",
     "react-markdown": "^4.1.0"
   },
   "peerDependencies": {

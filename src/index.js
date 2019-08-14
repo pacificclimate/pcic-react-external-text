@@ -2,30 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import _ from 'lodash';
+import addMapDeep from 'deepdash/addMapDeep';
 import axios from 'axios';
 import yaml from 'js-yaml';
 
-// TODO: Replace with Deepdash#mapDeep
-_.mixin({
-  mapTraverse: (collection, iteratee) => {
-    // Recursively traverse a collection and return a collection with the
-    // same structure (array, object) as the collection, but with the leaf
-    // (non-object) values replaced by applying function `iteratee` to them.
-    // Unlike other `_` map functions, `iteratee` is only passed the value
-    // of the leaf, and not a key or index.
-    const traverseValue = value => _.mapTraverse(value, iteratee);
-    if (_.isArray(collection)) {
-      return _.map(collection, traverseValue);
-    }
-    if (_.isPlainObject(collection)) {
-      return _.mapValues(collection, traverseValue);
-    }
-    return iteratee(collection);
-  }
-});
-
-
-export { _ };
+addMapDeep(_);
 
 
 export const ExternalTextContext = React.createContext(
@@ -179,7 +160,7 @@ export function get(texts, path, data = {}, as = 'string') {
     return (<ReactMarkdown escapeHtml={false} source={source}/>);
   };
 
-  return _.mapTraverse(item, render);
+  return _.mapDeep(item, render, { leavesOnly: true });
 }
 
 
