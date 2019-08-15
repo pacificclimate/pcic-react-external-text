@@ -22,7 +22,7 @@ export class Provider extends React.Component {
   //   from the source data
 
   static propTypes = {
-    texts: PropTypes.object,
+    defaultTexts: PropTypes.object,
     // Default, non-asynchronous data source.
 
     loadTexts: PropTypes.func,
@@ -38,7 +38,7 @@ export class Provider extends React.Component {
   };
 
   componentDidMount() {
-    this.setTexts(this.props.texts);
+    this.setTexts(this.props.defaultTexts);
     if (this.props.loadTexts) {
       this.props.loadTexts(this.setTexts);
     }
@@ -178,12 +178,12 @@ export default class ExternalText extends React.Component {
     // Path (JS standard notation) selecting text item from source texts.
     data: PropTypes.object,
     // Data context in which to evaluate item's text.
-    as: PropTypes.oneOf(['raw', 'string', 'markup']),
-    // What kind of content to render
+    as: PropTypes.oneOf(['raw', 'string', 'markdown']),
+    // How to render the item's text.
   };
 
   static defaultProps = {
-    as: 'markup',
+    as: 'markdown',
   };
 
   render() {

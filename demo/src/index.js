@@ -35,7 +35,7 @@ class Demo extends Component {
     return <div>
       <h1>External Text demonstration</h1>
       <p>The following content is all rendered from external text.</p>
-      <T.Provider texts={texts}>
+      <T.Provider defaultTexts={texts}>
         <T path='heading1'/>
         <T path='heading2'/>
         <T path='body'/>

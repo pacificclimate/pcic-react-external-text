@@ -212,7 +212,7 @@ Second content.
   };
 
   const externalText = (item, data = undefined) => (
-    <ExternalText.Provider texts={texts}>
+    <ExternalText.Provider defaultTexts={texts}>
       <ExternalText path={item} data={data}/>
     </ExternalText.Provider>
   );
@@ -282,7 +282,7 @@ Array [
 
   it('renders an array', function () {
     const stuff = (
-      <ExternalText.Provider texts={texts}>
+      <ExternalText.Provider defaultTexts={texts}>
         <div>
           <ExternalText path='arr' />
         </div>
@@ -311,7 +311,7 @@ Array [
 
     const component = renderer.create(
       <ExternalText.Provider
-        texts={{ greeting: 'Hello, ${name}' }}
+        defaultTexts={{ greeting: 'Hello, ${name}' }}
         loadTexts={asyncLoader.loadValue}
       >
         <ExternalText path={'greeting'} data={data}/>
