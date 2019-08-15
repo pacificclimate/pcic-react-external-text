@@ -432,11 +432,11 @@ the following Babel plugins.
     plugins: ["@babel/plugin-proposal-class-properties"]
     ```
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+[build-badge]: https://img.shields.io/travis/pacificclimate/pcic-react-external-text/master.png?style=flat-square
+[build]: https://travis-ci.org/pacificclimate/pcic-react-external-text
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
+[npm-badge]: https://img.shields.io/npm/v/pcic-react-external-text.png?style=flat-square
 [npm]: https://www.npmjs.org/package/npm-package
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+[coveralls-badge]: https://img.shields.io/coveralls/pacificclimate/pcic-react-external-text/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/pacificclimate/pcic-react-external-text
