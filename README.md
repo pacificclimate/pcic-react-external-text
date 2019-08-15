@@ -57,6 +57,26 @@ To install directly from GitHub:
 npm install git+https://git@github.com/pacificclimate/pcic-react-external-text.git#<version>
 ```
 
+## Demo
+
+To run the package demo:
+
+```shell script
+npm install
+npm start
+```
+
+After `npm start` should see:
+
+```text
+Compiled successfully in 2099 ms.
+
+The app is running at http://localhost:3000/
+```
+
+Browse to `localhost:3000` and you should see a React app that shows  page of text created via 
+`pcic-react-external-text`.
+
 ## Usage
 
 1. Prepare an external texts file. (This is usually done in parallel with
@@ -138,9 +158,24 @@ through React's context API.
 
 ## Development toolchain and configuration
 
-This codebase was kicked off with [nwb](https://github.com/insin/nwb),
+### nwb
+
+This codebase was created with with [nwb](https://github.com/insin/nwb),
 a toolchain that React [recommends](https://reactjs.org/docs/create-a-new-react-app.html#more-flexible-toolchains)
 for publishing react components for npm, which is our goal.
+
+The code repository was kicked off with
+
+```shell script
+nwb new react-component pcic-react-external-text 
+```
+
+We configured this project to create all optional builds (ES modules, UMD).
+
+See [Developing React Components and Libraries with nwb](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
+for more information.
+
+### Testing framework
 
 The nwb toolchain comes with a default testing setup that uses Karma to run tests written with Mocha and Expect in the 
 headless PhantomJS browser. These are all good things, but our standard React development testing
