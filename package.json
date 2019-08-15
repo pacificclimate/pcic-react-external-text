@@ -15,8 +15,9 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --coverage --coverageReporters=text-lcov",
+    "test:cov": "jest --coverage",
+    "test:nocov": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
