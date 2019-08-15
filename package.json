@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
     "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage --coverageReporters=text-lcov",
     "test:watch": "jest --watch"
   },
   "dependencies": {
