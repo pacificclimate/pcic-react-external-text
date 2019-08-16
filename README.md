@@ -98,31 +98,8 @@ of the external text by replacing (only) the external text file in the folder.
 This is often preferred to going through a full application release cycle just 
 to make minor changes to the text content of an app.
 
-   The following function uses the `axios` and `js-yaml` packages to
-construct such a loader:
-
-    ```js
-    import axios from 'axios';
-    import yaml from 'js-yaml';
-    
-    function makeYamlLoader(url) {
-      // Returns a function that can be used as the callback argument `loadTexts`
-      // to `ExternalTexts.Provider`. It issues an HTTP GET to `url`; treats
-      // the result as a YAML file, converting it to a JS object; then calls its
-      // argument `setTexts` with the resulting object. Any error thrown during
-      // this process is logged to the console (and `setTexts` is not called).
-      return function (setTexts) {
-        axios.get(url, { responseType: 'text' })
-        .then(response => response.data)
-        .then(yaml.safeLoad)
-        .then(setTexts)
-        .catch(error => {
-          console.error(error);
-        })
-        ;
-      };
-    }
-    ```
+   See `<Provider>` section below for 
+a typical asynchronous loader for YAML files, suitable as a value for `loadTexts`.
 
 1. Wrap the app (or other high-level component) in `ExternalText.Provider`.
 This provides the external text source to all `ExternalText` components
@@ -298,8 +275,46 @@ Name | Type | Default | Description
 Note both the similarity of these arguments to the props of component `ExternalText`, and the differences,
 largely in their default values.
 
+## Building and publishing/releasing
 
-## Development toolchain and configuration
+nwb (see [Development toolchain](#development-toolchain) below) 
+does most of the building and publishing work for us. 
+See [nwb docs](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#building-and-publishing)
+for more details.
+
+However, we wish, at least in the interim, to install packages directly from GitHub,
+and that requires one extra step: 
+**After running `npm run build` to prepare the package for publishing,
+we must also commit the changes to the `lib/` directory to GitHub.**
+
+When you are ready to create a new release of this package, follow this procedure:
+
+1. Make sure you export any new or renamed components in `src/index.js`.
+
+1. When all modifications have been completed, merge the branch or PR.
+
+1. On the command line, `npm run build`. 
+
+   A successful build will cause files in the `lib/`, `es/`, and `demo/dist` subtrees to be modified.
+   We only care about `lib/` at the moment, so we have placed only this directory under source
+   control. (Modify this as required by future needs.)
+
+1. Commit the changes in `lib/`.
+
+1. Increment `version` in `package.json`.
+
+1. Summarize the changes from the last version in `NEWS.md`.
+
+1. Commit these changes, then tag the release, and push all to GitHub, including tag:
+
+   ```bash
+   git add package.json NEWS.md
+   git commit -m "Bump to version x.x.x"
+   git tag -a -m "x.x.x" x.x.x
+   git push --follow-tags
+   ```
+
+## Development toolchain
 
 ### nwb
 
@@ -317,17 +332,6 @@ We configured this project to create all optional builds (ES modules, UMD).
 
 See [Developing React Components and Libraries with nwb](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
 for more information.
-
-### Building and publishing
-
-nwb does most of the building and publishing work for us. 
-See [nwb docs](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#building-and-publishing)
-for details.
-
-However, we wish, at least in the interim, to install packages directly from GitHub,
-and that requires one extra step: 
-**After running `npm run build` to prepare the package for publishing,
-we must also commit the changes to the `lib/` directory to GitHub.**
 
 ### Testing framework
 
