@@ -98,31 +98,8 @@ of the external text by replacing (only) the external text file in the folder.
 This is often preferred to going through a full application release cycle just 
 to make minor changes to the text content of an app.
 
-   The following function uses the `axios` and `js-yaml` packages to
-construct such a loader:
-
-    ```js
-    import axios from 'axios';
-    import yaml from 'js-yaml';
-    
-    function makeYamlLoader(url) {
-      // Returns a function that can be used as the callback argument `loadTexts`
-      // to `ExternalTexts.Provider`. It issues an HTTP GET to `url`; treats
-      // the result as a YAML file, converting it to a JS object; then calls its
-      // argument `setTexts` with the resulting object. Any error thrown during
-      // this process is logged to the console (and `setTexts` is not called).
-      return function (setTexts) {
-        axios.get(url, { responseType: 'text' })
-        .then(response => response.data)
-        .then(yaml.safeLoad)
-        .then(setTexts)
-        .catch(error => {
-          console.error(error);
-        })
-        ;
-      };
-    }
-    ```
+   See `<Provider>` section below for 
+a typical asynchronous loader for YAML files, suitable as a value for `loadTexts`.
 
 1. Wrap the app (or other high-level component) in `ExternalText.Provider`.
 This provides the external text source to all `ExternalText` components
