@@ -318,6 +318,17 @@ We configured this project to create all optional builds (ES modules, UMD).
 See [Developing React Components and Libraries with nwb](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
 for more information.
 
+### Building and publishing
+
+nwb does most of the building and publishing work for us. 
+See [nwb docs](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#building-and-publishing)
+for details.
+
+However, we wish, at least in the interim, to install packages directly from GitHub,
+and that requires one extra step: 
+**After running `npm run build` to prepare the package for publishing,
+we must also commit the changes to the `lib/` directory to GitHub.**
+
 ### Testing framework
 
 The nwb toolchain comes with a default testing setup that uses Karma to run tests written with Mocha and Expect in the 
