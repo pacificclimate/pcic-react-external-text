@@ -247,7 +247,7 @@ Second content.
   it('handles a composite MD case', () => {
     const tree = externalTextTree('composite');
     expect(tree).toMatchInlineSnapshot(`
-Array [
+[
   <h1>
     Impressive Title
   </h1>,

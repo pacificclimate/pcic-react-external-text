@@ -11,34 +11,36 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component",
-    "clean": "nwb clean-module && nwb clean-demo",
+    "build": "rollup --config",
+    "clean": "rm -rf es lib umd",
     "prepublishOnly": "npm run build",
-    "start": "nwb serve-react-demo",
     "test": "jest --coverage --coverageReporters=text-lcov",
     "test:cov": "jest --coverage",
     "test:nocov": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "deepdash": "^4.2.12",
+    "deepdash": "5.3.9",
     "react-markdown": "^4.1.0"
   },
   "peerDependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "react": "16.x"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-jest": "^24.8.0",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "jest": "^24.8.0",
-    "nwb": "0.23.x",
+    "@babel/core": "7.29.7",
+    "@babel/preset-env": "7.28.5",
+    "@babel/preset-react": "7.28.5",
+    "@rollup/plugin-babel": "7.1.0",
+    "@rollup/plugin-commonjs": "29.0.3",
+    "@rollup/plugin-json": "6.1.0",
+    "@rollup/plugin-node-resolve": "16.0.3",
+    "babel-jest": "30.4.1",
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.8",
+    "jest": "30.4.2",
+    "rollup": "4.62.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -53,5 +55,9 @@
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.js"
     ]
+  },
+  "engines": {
+    "node": "24.x",
+    "npm": "12.x"
   }
 }

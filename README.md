@@ -1,7 +1,6 @@
 # pcic-react-external-text
 
 [![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
 ## Purpose
@@ -46,37 +45,37 @@ package).
 
 ## Installation
 
-Depends on whether we actually publish to npm. If so:
+This package is distributed from the [pacificclimate](https://github.com/pacificclimate) Git repository, not the npm registry. Install a reviewed, immutable commit from GitHub:
 
-```
-npm install pcic-react-external-text
-```
-
-To install directly from GitHub:
-
-```
-npm install git+https://git@github.com/pacificclimate/pcic-react-external-text.git#<version>
+```shell
+npm install git+https://git@github.com/pacificclimate/pcic-react-external-text.git#<commit-sha>
 ```
 
-## Demo
+Your consuming project's npm policy must allow its direct Git dependency. Do
+not allow arbitrary transitive Git or remote dependencies.
 
-To run the package demo:
+## Development
+
+Development requires Node 24.x and npm 12.x. The repository's `.npmrc`
+enforces the dependency security policy; do not approve lifecycle scripts just
+to make an install succeed.
 
 ```shell script
-npm install
-npm start
+npm ci
+npm run build
+npm test
 ```
 
-After `npm start` you should see:
+`npm run build` uses Rollup and writes the distributable bundles to:
 
 ```text
-Compiled successfully in 2099 ms.
-
-The app is running at http://localhost:3000/
+lib/index.js  CommonJS entry point
+es/index.js   ES module entry point
+umd/index.js  UMD browser bundle
 ```
 
-Browse to `localhost:3000` and you should see a React app that shows  page of text created via 
-`pcic-react-external-text`.
+Use `npm run clean` to remove generated bundles. This repository no longer
+provides an NWB development server or demo application.
 
 ## Usage
 
@@ -275,183 +274,32 @@ Name | Type | Default | Description
 Note both the similarity of these arguments to the props of component `ExternalText`, and the differences,
 largely in their default values.
 
-## Building and publishing/releasing
+## Building and distribution
 
-nwb (see [Development toolchain](#development-toolchain) below) 
-does most of the building and publishing work for us. 
-See [nwb docs](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#building-and-publishing)
-for more details.
+When updating this repository, run npm ci, npm run build, and npm test, then review the generated lib/index.js with the source and lockfile changes.
 
-However, we wish, at least in the interim, to install packages directly from GitHub,
-and that requires one extra step: 
-**After running `npm run build` to prepare the package for publishing,
-we must also commit the changes to the `lib/` directory to GitHub.**
-
-When you are ready to create a new release of this package, follow this procedure:
-
-1. Make sure you export any new or renamed components in `src/index.js`.
-
-1. When all modifications have been completed, merge the branch or PR.
-
-1. On the command line, `npm run build`. 
-
-   A successful build will cause files in the `lib/`, `es/`, and `demo/dist` subtrees to be modified.
-   We only care about `lib/` at the moment, so we have placed only this directory under source
-   control. (Modify this as required by future needs.)
-
-1. Commit the changes in `lib/`.
-
-1. Increment `version` in `package.json`.
-
-1. Summarize the changes from the last version in `NEWS.md`.
-
-1. Commit these changes, then tag the release, and push all to GitHub, including tag:
-
-   ```bash
-   git add package.json NEWS.md
-   git commit -m "Bump to version x.x.x"
-   git tag -a -m "x.x.x" x.x.x
-   git push --follow-tags
-   ```
+Rollup creates CommonJS, ES module, and UMD outputs. `lib/index.js` is the
+tracked CommonJS entry point consumed by Git-based installations; `es/` and
+`umd/` are local build artifacts.
 
 ## Development toolchain
 
-### nwb
+Rollup is the component-library build tool. Its configuration is in
+`rollup.config.js`; it compiles `src/index.js` to `lib/index.js`,
+`es/index.js`, and `umd/index.js`, while keeping React, Lodash, and PropTypes
+as peer dependencies.
 
-This codebase was created with with [nwb](https://github.com/insin/nwb),
-a toolchain that React [recommends](https://reactjs.org/docs/create-a-new-react-app.html#more-flexible-toolchains)
-for publishing react components for npm, which is our goal.
+The test suite uses Jest 30 with Babel 7. `babel.config.js` handles modern
+JavaScript and JSX, and `setupTests.js` configures the existing React 16
+Enzyme adapter.
 
-The code repository was kicked off with
-
-```shell script
-nwb new react-component pcic-react-external-text 
-```
-
-We configured this project to create all optional builds (ES modules, UMD).
-
-See [Developing React Components and Libraries with nwb](https://github.com/insin/nwb/blob/master/docs/guides/ReactComponents.md#developing-react-components-and-libraries-with-nwb)
-for more information.
-
-### Testing framework
-
-The nwb toolchain comes with a default testing setup that uses Karma to run tests written with Mocha and Expect in the 
-headless PhantomJS browser. These are all good things, but our standard React development testing
-setup uses Jest and Enzyme, and we don't want to proliferate frameworks where we don't have to.
-
-Setting up an nwb project to use Jest and Enzyme turns out to be fairly straightforward, but not trivial. 
-There is an [outdated tutorial](https://medium.com/@sumn2u/configuring-different-testing-library-in-nwb-for-react-7cd2804b4f7c) 
-on doing this that is best ignored.
-
-**IMPORTANT**: Tutorials and examples go out of date relatively fast in this ecosystem.
-It is critical to use compatible versions of React, Jest, Enzyme, Babel, and the related presets, plugins, 
-and packages that connect and configure them. If you do not, errors occur that are essentially impossible to resolve. 
-It is best to follow the instructions for the exact versions of the tools you are using.
-It is also in general best to 
-use the most up-to-date releases (in particular, as of this writing, React 16, Jest 24, Enzyme 3, Babel 7) of your
-tools. Regular upgrading, though sometimes burdensome, pays off in the not-so-very-long run.
-
-The following information should serve as a template for other projects wishing to configure an nwb project
-to use Jest and Enzyme:
-
-1. Install Jest:
-
-    ```
-    npm install --save-dev jest 
-    ```
-   
-    Revise test scripts in `package.json` to run Jest:
-
-    ```json
-    "scripts": {
-      ...,
-      "test": "jest",
-      "test:coverage": "jest --coverage",
-      "test:watch": "jest --watch"
-    }
-    ```
-   
-   References:
-   * [Jest: Getting Started](https://jestjs.io/docs/en/getting-started)
-   * [Jest CLI Options](https://jestjs.io/docs/en/cli)
-   
-1. At this point we can write and run tests coded in plain ES5 Javascript, but not ES6 or JSX (React).
-
-1. For ES6 and JSX we need to install Babel, the Babel Jest plugin, and configure Babel to use them. 
-We also need to install and configure a Babel preset to process JSX (`@babel/preset-react`).
-
-    ```
-    npm install --save-dev babel-jest @babel/core @babel/preset-env @babel/preset-react
-    ``` 
-   
-    Add the following `babel.config.js` file:
-    
-    ```js
-    module.exports = {
-      presets: [
-        [
-          '@babel/preset-env',
-          {
-            targets: {
-              node: 'current',
-            },
-          },
-        ],
-        '@babel/preset-react'
-      ],
-    };
-    ```
-   
-    References: 
-    * [Using Babel](https://jestjs.io/docs/en/getting-started.html#using-babel)
-    * [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react/)
-
-1. To use Enzyme, we must install and configure it.
-
-    ```
-    npm install --save-dev enzyme enzyme-adapter-react-16
-    ```
-   
-    Configuration has two parts. First, in `package.json` (or, in a separate `jest.config.js` file):
-    
-    ```json
-    ...,
-    "jest": {
-      "setupFilesAfterEnv": ["<rootDir>/setupTests.js"]
-    }
-    ```
-   
-   Then, add the file `setupTests.js`:
-   
-   ```js
-    import Enzyme from 'enzyme';
-    import Adapter from 'enzyme-adapter-react-16';
-    
-    Enzyme.configure({ adapter: new Adapter() });
-    ```
-   
-    References:
-    * [Enzyme](https://airbnb.io/enzyme/)
-    * [Using enzyme with Jest](https://airbnb.io/enzyme/docs/guides/jest.html#using-enzyme-with-jest)
-    
-1. We also wish to use some advanced JavaScript syntax in the tests, for which we install and configure 
-the following Babel plugins.
-
-    ```
-    npm install --save-dev @babel/plugin-proposal-class-properties
-    ```
-   
-    In `babel.config.js`:
-   
-    ```js
-    plugins: ["@babel/plugin-proposal-class-properties"]
-    ```
+Enzyme is retained for the current React 16 test suite, but it should not be
+used as a template for new projects: its legacy dependency tree has unresolved
+security findings. Replacing it should be part of a future, coordinated React 18
+migration, together with upgrading React Markdown.
 
 [build-badge]: https://img.shields.io/travis/pacificclimate/pcic-react-external-text/master.png?style=flat-square
 [build]: https://travis-ci.org/pacificclimate/pcic-react-external-text
-
-[npm-badge]: https://img.shields.io/npm/v/pcic-react-external-text.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
 
 [coveralls-badge]: https://img.shields.io/coveralls/pacificclimate/pcic-react-external-text/master.png?style=flat-square
 [coveralls]: https://coveralls.io/github/pacificclimate/pcic-react-external-text
