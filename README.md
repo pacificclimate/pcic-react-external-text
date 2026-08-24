@@ -74,8 +74,19 @@ es/index.js   ES module entry point
 umd/index.js  UMD browser bundle
 ```
 
-Use `npm run clean` to remove generated bundles. This repository no longer
-provides an NWB development server or demo application.
+Use `npm run clean` to remove generated bundles.
+
+## Demo
+
+Run the component demo with hot module reloading at
+<http://localhost:3000>:
+
+```shell
+npm start
+```
+
+The demo is built with Vite and imports the library source directly. Run
+`npm run build:demo` to create a production demo bundle in `demo/dist`.
 
 ## Usage
 

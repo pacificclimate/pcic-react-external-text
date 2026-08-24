@@ -13,6 +13,8 @@
   "scripts": {
     "build": "rollup --config",
     "clean": "rm -rf es lib umd",
+    "start": "vite --config demo/vite.config.mjs",
+    "build:demo": "vite build --config demo/vite.config.mjs",
     "prepublishOnly": "npm run build",
     "test": "jest --coverage --coverageReporters=text-lcov",
     "test:cov": "jest --coverage",
@@ -36,11 +38,13 @@
     "@rollup/plugin-commonjs": "29.0.3",
     "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-node-resolve": "16.0.3",
+    "@vitejs/plugin-react": "5.1.1",
     "babel-jest": "30.4.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.8",
     "jest": "30.4.2",
     "rollup": "4.62.4",
+    "vite": "7.3.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -61,6 +65,7 @@
     "npm": "12.x"
   },
   "allowScripts": {
-    "unrs-resolver@1.12.2": true
+    "unrs-resolver@1.12.2": true,
+    "esbuild@0.28.2": true
   }
 }

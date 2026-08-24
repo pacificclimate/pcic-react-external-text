@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 
-import T, {Provider} from '../../src';
+import T, { Provider } from '../../src';
 
 const texts = {
   heading1: '# Heading level 1',
@@ -32,7 +32,7 @@ I hope that these topics have provided you with enlightenment and pleasure.
 
 class Demo extends Component {
   render() {
-    return <div>
+    return <main style={{ fontFamily: 'sans-serif', margin: '2rem auto', maxWidth: '48rem' }}>
       <h1>External Text demonstration</h1>
       <p>The following content is all rendered from external text.</p>
       <T.Provider defaultTexts={texts}>
@@ -40,7 +40,7 @@ class Demo extends Component {
         <T path='heading2'/>
         <T path='body'/>
       </T.Provider>
-    </div>
+    </main>
   }
 }
 
