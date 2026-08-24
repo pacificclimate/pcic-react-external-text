@@ -59,5 +59,8 @@
   "engines": {
     "node": "24.x",
     "npm": "12.x"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
   }
 }
