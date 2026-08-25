@@ -3,11 +3,20 @@ const commonjs = require('@rollup/plugin-commonjs');
 const json = require('@rollup/plugin-json');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 
-const peerDependencies = ['react', 'lodash', 'prop-types'];
+const pkg = require('./package.json');
+
+const dependencies = [
+  ...Object.keys(pkg.peerDependencies || {}),
+  ...Object.keys(pkg.dependencies || {}),
+];
+;
 
 module.exports = {
   input: 'src/index.js',
-  external: peerDependencies,
+  external: id =>
+    dependencies.some(
+      dep => id === dep || id.startsWith(`${dep}/`)
+    ),
   output: [
     { file: 'lib/index.js', format: 'cjs', exports: 'named' },
     { file: 'es/index.js', format: 'es' },
