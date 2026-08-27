@@ -1,6 +1,6 @@
 {
   "name": "pcic-react-external-text",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "pcic-react-external-text React component",
   "main": "lib/index.js",
   "module": "es/index.js",
