@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import _ from 'lodash';
-import addMapDeep from 'deepdash/addMapDeep';
+import addMapValuesDeep from 'deepdash/addMapValuesDeep';
 
-addMapDeep(_);
+addMapValuesDeep(_);
 
 
 export const ExternalTextContext = React.createContext(
@@ -158,7 +158,7 @@ export function get(texts, path, data = {}, as = 'string') {
     return (<ReactMarkdown escapeHtml={false} source={source}/>);
   };
 
-  return _.mapDeep(item, render, { leavesOnly: true });
+  return _.mapValuesDeep(item, render, { leavesOnly: true });
 }
 
 
